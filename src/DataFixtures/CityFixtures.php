@@ -5,16 +5,19 @@ namespace App\DataFixtures;
 use App\Entity\City;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 
 class CityFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
 
+        $faker = Factory::create('fr_FR');
+
         for ($i = 0; $i < 1000; $i++) {
             $city = new City();
-            $city->setName("Lyon");
-            $city->setZipcode("69001");
+            $city->setName($faker->city);
+            $city->setZipcode($faker->postcode);
 
             $manager->persist($city);
         }

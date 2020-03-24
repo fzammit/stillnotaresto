@@ -19,22 +19,21 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    // /**
-    //  * @return Review[] Returns an array of Review objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Review[] Returns an array of Review objects
+    */
+    public function findBestTenRatings()
     {
+
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
+            ->select('restaurant.id as restaurantId')
+            ->innerJoin('r.restaurant', 'restaurant')
+            ->groupBy('restaurant')
+            ->orderBy('AVG(r.rating)', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Review
